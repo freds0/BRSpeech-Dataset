@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>BRSpeech: A high-quality dataset in Portuguese for speech synthesis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+</head>
+
+<body>
+    <section id="page-header" class="page-header">
+        <div id="bg-header"></div>
+        <canvas id="demo-canvas"></canvas>
+        <div class="main-title">
+            <h1 class="project-name"><span><a href="index.html">A high-quality dataset in Brazilian Portuguese for speech synthesis Dataset</a></span></h1>
+            <!-- <h2 class="project-tagline">Sentence Boundary Detection using Deep Learning</h2> -->
+            <h2 class="project-tagline">BRSpeech: A high-quality dataset in Portuguese for speech synthesis</h2>
+        </div>-->
+    </section>
+
+    <section class="main-content">
+
+        <center>
+            <a href="https://github.com/freds0/BRSpeech-Dataset" class="btn2">• GitHub •</a>
+            <a href="https://arxiv.org/abs/999.999" class="btn2">• Paper on arXiv •</a></li>
+            <a href="https://colab.research.google.com/drive/1nZuvfW-gjoKJgm_S5_f9ydi5W1xvesCK?usp=sharing" class="btn2">• Colab Demo •</a></li>
+        </center>
+
+
+<br>
+<br>
+
+
+<h3>Download</h3>
+
+<p>You can download in <a href="http://www.openslr.org/146/">http://www.openslr.org/146/</a>, or each version separately:</p>
+
+<ul>
+    <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_portuguese_v0.1.tar.bz">CML-TTS Dataset Portuguese</a> - MD5: 8c877a4be0eb41f275497609df5a114c</li>
+    <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_segments_v0.1.tar.bz">CML-TTS Dataset Segments</a> - MD5: f529a908aba26a6d891b4fb17ab3125b</li>
+</ul>
+    
+  
+<h3>Statistics</h3>
+
+<p>BRSpeech is a dataset comprising audiobooks sourced from the public domain books of <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a>, read by volunteers from the <a href="https://librivox.org/" target="_blank">LibriVox</a> project. The dataset includes recordings in Dutch, German, French, Italian, Polish, Portuguese, and Spanish, all at a sampling rate of 24kHz. The following figure shows pie charts indicating the percentage of each language's duration (on the left), sample quality percentage (in the center), and the percentage of speakers' gender (on the right).</p>
+
+<center>
+    <div style="display: flex; justify-content: center;">
+        <img src="img/cml_tts_pieplot.png" width="720">
+    </div>
+</center>
+
+The table below displays the total duration of each language subset present in the CML-TTS dataset, as well as the duration of the Train, Test, and Dev sets. Additionally, the table provides the duration of the sets categorized by speaker gender.
+
+<center>
+    <div style="display: flex; justify-content: center;">
+        <img src="img/cml_tts_statistics.png" width="900">
+    </div>
+</center>
+
+
+
+<h3 style="text-align:center;">Portuguese Samples</h3>
+<p style="text-align:center;"><b>Audio Samples for CML-TTS Portuguese</b></p>
+<table style="margin:0 auto;">
+    <thead>
+        <tr>
+            <th>Speaker</th>
+            <th>Ground Truth</th>
+            <th>YourTTS</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td rowspan="3">4067</td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000002_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000002_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000033_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000033_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000088_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000088_yourtts.wav"></audio></td>
+    </tr>   
+  
+   <tr>
+        <td rowspan="3">6549</td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000013_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000013_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_13511_000039-0002_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_13511_000039-0002_yourtts.wav"></audio></td>
+    </tr>  
+
+   <tr>
+        <td rowspan="3">11247</td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000033-0001_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000033-0001_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000048_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000048_yourtts.wav"></audio></td>
+    </tr>    
+
+   <tr>
+        <td rowspan="3">12710</td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000047_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000047_yourtts.wav"></audio></td>
+    </tr>
+    <tr>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000052-0001_ground_truth.wav"></audio></td>
+        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000052-0001_yourtts.wav"></audio></td>
+    </tr>                
+</table>
+
+
+<h3>Citation</h3>
+<pre class="highlight">
+@InProceedings{Cmltts2023,
+    title="CML-TTS: A Multilingual Dataset for Speech Synthesis in Low-Resource Languages",
+    author="Oliveira, Frederico S. and Casanova, Edresson and Junior, Arnaldo Candido and Soares, Anderson S. and Galv{\~a}o Filho, Arlindo R.", 
+    editor="Ek{\v{s}}tein, Kamil and P{\'a}rtl, Franti{\v{s}}ek and Konop{\'i}k, Miloslav",
+    booktitle="Text, Speech, and Dialogue",
+    year="2023",
+    publisher="Springer Nature Switzerland",
+    address="Cham",
+    pages="188--199",
+    isbn="978-3-031-40498-6"
+}
+</pre>
+
+
+<footer class="site-footer">
+    <a href="https://ceia.ufg.br/" title="CEIA" target="_blank"> <img src="img/ceia.png" border="0" height="100"> </a>    
+    <a href="http://www.deeplearningbrasil.com.br/" title="Deep Learning Brasil" target="_blank"> <img src="img/dlb.png" border="0" height="50"> </a>
+    <div class="cleaner"></div>
+</footer>
+<span class="site-footer-owner">
+    <center></center>
+</span>
+</section>
+
+
+
+
+    <script src="js/animheader.js"></script>
+
+</body>
+
+</html>
