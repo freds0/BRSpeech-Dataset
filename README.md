@@ -4,11 +4,10 @@ BRSpeech is a dataset for training Text-to-Speech (TTS) models in Portuguese, ba
 
 
 ## Download
-To download the BRSpeech dataset, [click here](http://www.openslr.org/146/).
 
-You can download it alternatively at:
+BRSpeech is not available yet. Check the CML-TTS Dataset in the meantime.
 
-- [BRSpeech Dataset](https://www.openslr.org/resources/146/cml_tts_dataset_portuguese_v0.1.tar.bz)
+- [BCML-TTS Dataset](https://www.openslr.org/resources/146/cml_tts_dataset_portuguese_v0.1.tar.bz)
 
 The segments files are available at [in this link](https://www.openslr.org/resources/146/cml_tts_dataset_segments_v0.1.tar.bz).
 
