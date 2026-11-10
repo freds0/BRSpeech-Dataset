@@ -1,14 +1,90 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>BRSpeech: A high-quality dataset in Portuguese for speech synthesis</title>
+    <title>BRSpeech-TTS: A High-Quality Portuguese Dataset for Speech Synthesis (Adobe Enhanced)</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" type="text/css">
     <link rel="shortcut icon" type="image/x-icon" href="favicons/favicon.ico">
     <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
     <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0 2rem 0;
+        }
+        .stat-card {
+            background: #f6f8fa;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+        .stat-card .stat-value {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #155799;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        .stat-card .stat-label {
+            font-size: 0.85rem;
+            color: #57606a;
+            font-weight: 600;
+        }
+        .highlight-box {
+            background-color: #f0f7ff;
+            border-left: 4px solid #155799;
+            padding: 1rem 1.25rem;
+            border-radius: 0 6px 6px 0;
+            margin: 1.25rem 0;
+        }
+        .figure-block {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        .figure-block img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #eaecef;
+            border-radius: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .figure-caption {
+            font-size: 0.92rem;
+            color: #57606a;
+            margin-top: 0.6rem;
+            font-style: italic;
+        }
+        .data-table {
+            display: table !important;
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            font-size: 0.95rem;
+        }
+        .data-table th {
+            background-color: #155799;
+            color: #ffffff;
+            text-align: center;
+            padding: 0.65rem 0.75rem;
+        }
+        .data-table td {
+            text-align: center;
+            padding: 0.55rem 0.75rem;
+        }
+        .data-table tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+        .data-table tr.total-row {
+            background-color: #eaecef;
+            font-weight: 700;
+        }
+    </style>
 </head>
 
 <body>
@@ -16,125 +92,439 @@
         <div id="bg-header"></div>
         <canvas id="demo-canvas"></canvas>
         <div class="main-title">
-            <h1 class="project-name"><span><a href="index.html">A high-quality dataset in Brazilian Portuguese for speech synthesis Dataset</a></span></h1>
-            <!-- <h2 class="project-tagline">Sentence Boundary Detection using Deep Learning</h2> -->
-            <h2 class="project-tagline">BRSpeech: A high-quality dataset in Portuguese for speech synthesis</h2>
-        </div>-->
+            <h1 class="project-name"><span><a href="index.html">BRSpeech-TTS: A High-Quality Dataset in Portuguese for Speech Synthesis</a></span></h1>
+            <h2 class="project-tagline">CML-TTS Portuguese Subset Enhanced with Adobe Speech Enhancement at 48 kHz</h2>
+        </div>
     </section>
 
     <section class="main-content">
 
         <center>
-            <a href="https://github.com/freds0/BRSpeech-Dataset" class="btn2">• GitHub •</a>
-            <a href="https://arxiv.org/abs/999.999" class="btn2">• Paper on arXiv •</a></li>
-            <a href="https://colab.research.google.com/drive/1nZuvfW-gjoKJgm_S5_f9ydi5W1xvesCK?usp=sharing" class="btn2">• Colab Demo •</a></li>
+            <a href="https://huggingface.co/datasets/freds0/BRSpeech-TTS/" class="btn2" target="_blank">• 🤗 Hugging Face (BRSpeech-TTS) •</a>
+            <a href="https://github.com/freds0/BRSpeech-Dataset" class="btn2" target="_blank">• GitHub •</a>
+            <a href="http://www.openslr.org/146/" class="btn2" target="_blank">• OpenSLR •</a>
+            <a href="https://link.springer.com/chapter/10.1007/978-3-031-40498-6_17" class="btn2" target="_blank">• Paper (TSD 2023) •</a>
+            <a href="https://colab.research.google.com/drive/1nZuvfW-gjoKJgm_S5_f9ydi5W1xvesCK?usp=sharing" class="btn2" target="_blank">• Colab Demo •</a>
         </center>
 
+        <br>
 
-<br>
-<br>
+        <h3>About BRSpeech-TTS</h3>
 
+        <p>
+            <strong>BRSpeech-TTS</strong> is a high-quality, multi-speaker speech synthesis (Text-to-Speech) corpus in Portuguese, developed at the <a href="https://ceia.ufg.br/" target="_blank">Center of Excellence in Artificial Intelligence (CEIA)</a> of the Federal University of Goiás (UFG).
+            It is an enhanced version of the Portuguese subset of the <strong>CML-TTS Dataset</strong> that underwent professional studio-level audio restoration and speech enhancement using <strong>Adobe Podcast Enhance (Adobe Speech Enhancement)</strong>.
+        </p>
 
-<h3>Download</h3>
+        <div class="highlight-box">
+            <strong>Key Enhancements over Original CML-TTS Portuguese:</strong>
+            <ul style="margin-bottom: 0; margin-top: 0.4rem;">
+                <li><strong>Adobe Speech Enhancement:</strong> All recordings from the CML-TTS Portuguese subset were processed through Adobe Enhancement to remove background noise, room reverberation, and microphone artifacts while preserving speaker timbre and prosody.</li>
+                <li><strong>Full-Bandwidth 48 kHz Audio:</strong> Upsampled and restored to <strong>48 kHz</strong> (16-bit PCM Mono FLAC/WAV), compared to 24 kHz in the original CML-TTS release.</li>
+                <li><strong>ASR-Verified Transcriptions:</strong> Segments were transcribed using <strong>OpenAI Whisper Large-v2</strong> and <strong>MMS</strong>, aligned against public-domain literary texts from <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a> and <a href="https://librivox.org/" target="_blank">LibriVox</a>, achieving a mean Levenshtein similarity score of <strong>0.983</strong> (median <strong>1.000</strong>).</li>
+            </ul>
+        </div>
 
-<p>You can download in <a href="http://www.openslr.org/146/">http://www.openslr.org/146/</a>, or each version separately:</p>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="stat-value">159.87 h</span>
+                <span class="stat-label">Total Audio Duration</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">62</span>
+                <span class="stat-label">Speakers (37 M / 25 F)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">39,230</span>
+                <span class="stat-label">Base FLAC Segments</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">76,322</span>
+                <span class="stat-label">HF Parquet Utterances</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">55</span>
+                <span class="stat-label">Public Domain Books</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">48 kHz</span>
+                <span class="stat-label">Adobe Enhanced Audio</span>
+            </div>
+        </div>
 
-<ul>
-    <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_portuguese_v0.1.tar.bz">CML-TTS Dataset Portuguese</a> - MD5: 8c877a4be0eb41f275497609df5a114c</li>
-    <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_segments_v0.1.tar.bz">CML-TTS Dataset Segments</a> - MD5: f529a908aba26a6d891b4fb17ab3125b</li>
-</ul>
-    
-  
-<h3>Statistics</h3>
+        <h3>Download &amp; Hugging Face Hub</h3>
 
-<p>BRSpeech is a dataset comprising audiobooks sourced from the public domain books of <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a>, read by volunteers from the <a href="https://librivox.org/" target="_blank">LibriVox</a> project. The dataset includes recordings in Dutch, German, French, Italian, Polish, Portuguese, and Spanish, all at a sampling rate of 24kHz. The following figure shows pie charts indicating the percentage of each language's duration (on the left), sample quality percentage (in the center), and the percentage of speakers' gender (on the right).</p>
+        <p>
+            The <strong>BRSpeech-TTS</strong> dataset is officially hosted on the Hugging Face Hub at
+            <a href="https://huggingface.co/datasets/freds0/BRSpeech-TTS/" target="_blank"><strong>https://huggingface.co/datasets/freds0/BRSpeech-TTS/</strong></a>
+            under the <strong>CC-BY 4.0</strong> license. You can load it directly in Python using the Hugging Face <code>datasets</code> library:
+        </p>
 
-<center>
-    <div style="display: flex; justify-content: center;">
-        <img src="img/cml_tts_pieplot.png" width="720">
-    </div>
-</center>
+<pre class="highlight"><code>from datasets import load_dataset
 
-The table below displays the total duration of each language subset present in the CML-TTS dataset, as well as the duration of the Train, Test, and Dev sets. Additionally, the table provides the duration of the sets categorized by speaker gender.
+# Load the BRSpeech-TTS dataset from Hugging Face Hub
+dataset = load_dataset("freds0/BRSpeech-TTS")
 
-<center>
-    <div style="display: flex; justify-content: center;">
-        <img src="img/cml_tts_statistics.png" width="900">
-    </div>
-</center>
+print(dataset)
+# DatasetDict({
+#     train: Dataset({features: ['wav_filename', 'duration', 'text', 'transcript', 'levenshtein', 'speaker', 'file_size', 'num_words', 'gender', 'accent', 'audio'], num_rows: 73848})
+#     validation: Dataset({features: [...], num_rows: 1158})
+#     test: Dataset({features: [...], num_rows: 1316})
+# })</code></pre>
 
+        <p>You can also download the original CML-TTS Portuguese archives and segment metadata on <a href="http://www.openslr.org/146/" target="_blank">OpenSLR (SLR146)</a>:</p>
+        <ul>
+            <li><a href="https://huggingface.co/datasets/freds0/BRSpeech-TTS/" target="_blank"><strong>BRSpeech-TTS on Hugging Face Hub</strong></a> (Adobe Enhanced version — Parquet format with integrated audio, transcripts, Levenshtein scores, speaker gender &amp; accent metadata)</li>
+            <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_portuguese_v0.1.tar.bz">CML-TTS Dataset Portuguese (v0.1)</a> — MD5: <code>8c877a4be0eb41f275497609df5a114c</code></li>
+            <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_segments_v0.1.tar.bz">CML-TTS Dataset Segments (v0.1)</a> — MD5: <code>f529a908aba26a6d891b4fb17ab3125b</code></li>
+            <li>BRSpeech-CML-TTS Release Archive (<code>BRSpeech_CML_TTS_v14012024.tar.bz</code>) — MD5: <code>0966023cea9c0f339dae464d0fcfe7f8</code></li>
+        </ul>
 
+        <h3>Dataset Statistics &amp; Analysis</h3>
 
-<h3 style="text-align:center;">Portuguese Samples</h3>
-<p style="text-align:center;"><b>Audio Samples for CML-TTS Portuguese</b></p>
-<table style="margin:0 auto;">
-    <thead>
-        <tr>
-            <th>Speaker</th>
-            <th>Ground Truth</th>
-            <th>YourTTS</th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td rowspan="3">4067</td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000002_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000002_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000033_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000033_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000088_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/4067/4067_3313_000088_yourtts.wav"></audio></td>
-    </tr>   
-  
-   <tr>
-        <td rowspan="3">6549</td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000013_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_4739_000013_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_13511_000039-0002_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/6549/6549_13511_000039-0002_yourtts.wav"></audio></td>
-    </tr>  
+        <p>
+            BRSpeech-TTS comprises recordings of <strong>55 public-domain literary works</strong> from <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a> read by <strong>62 volunteer narrators</strong> from the <a href="https://librivox.org/" target="_blank">LibriVox</a> project (61 Brazilian Portuguese speakers accounting for 99.8% of total duration, and 1 European Portuguese speaker in the validation split accounting for 0.2%).
+            Across the <strong>39,230 base FLAC recordings</strong> (20.59 GB compressed FLAC; further segmented into <strong>76,322 utterances</strong> in the Hugging Face Hub release), the corpus totals <strong>159.87 hours</strong> of speech and <strong>1,306,913 words</strong> (7.61 million characters).
+        </p>
 
-   <tr>
-        <td rowspan="3">11247</td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000033-0001_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000033-0001_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000048_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/11247/11247_10229_000048_yourtts.wav"></audio></td>
-    </tr>    
+        <h4>1. Split &amp; Gender Breakdown</h4>
+        <p>The table below details the distribution of audio duration, speakers, base segments, Hugging Face sub-segments, and literary works across the <code>train</code>, <code>validation (dev)</code>, and <code>test</code> splits:</p>
 
-   <tr>
-        <td rowspan="3">12710</td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000047_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000047_yourtts.wav"></audio></td>
-    </tr>
-    <tr>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000052-0001_ground_truth.wav"></audio></td>
-        <td><audio controls style="width: 220px;" src="audios_demo/portuguese/12710/12710_10229_000052-0001_yourtts.wav"></audio></td>
-    </tr>                
-</table>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Subset Split</th>
+                    <th>Male Duration</th>
+                    <th>Female Duration</th>
+                    <th>Total Duration</th>
+                    <th>Male Speakers</th>
+                    <th>Female Speakers</th>
+                    <th>Total Speakers</th>
+                    <th>Base FLAC Segments</th>
+                    <th>HF Hub Utterances</th>
+                    <th>Books</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Train</strong></td>
+                    <td>51.28 h</td>
+                    <td>101.23 h</td>
+                    <td><strong>152.51 h</strong></td>
+                    <td>25</td>
+                    <td>17</td>
+                    <td><strong>42</strong></td>
+                    <td>37,533</td>
+                    <td>73,848</td>
+                    <td>53</td>
+                </tr>
+                <tr>
+                    <td><strong>Validation (Dev)</strong></td>
+                    <td>2.50 h</td>
+                    <td>1.13 h</td>
+                    <td><strong>3.63 h</strong></td>
+                    <td>7</td>
+                    <td>3</td>
+                    <td><strong>10</strong></td>
+                    <td>826</td>
+                    <td>1,158</td>
+                    <td>10</td>
+                </tr>
+                <tr>
+                    <td><strong>Test</strong></td>
+                    <td>1.90 h</td>
+                    <td>1.83 h</td>
+                    <td><strong>3.73 h</strong></td>
+                    <td>5</td>
+                    <td>5</td>
+                    <td><strong>10</strong></td>
+                    <td>871</td>
+                    <td>1,316</td>
+                    <td>9</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Total</td>
+                    <td>55.68 h (34.8%)</td>
+                    <td>104.19 h (65.2%)</td>
+                    <td>159.87 h (100%)</td>
+                    <td>37 (59.7%)</td>
+                    <td>25 (40.3%)</td>
+                    <td>62 (100%)</td>
+                    <td>39,230</td>
+                    <td>76,322</td>
+                    <td>55</td>
+                </tr>
+            </tbody>
+        </table>
 
+        <div class="figure-block">
+            <img src="img/brspeech_tts_statistics.png" alt="BRSpeech-TTS Summary Statistics Table" width="900">
+            <div class="figure-caption">Figure 1: Summary of BRSpeech-TTS splits categorized by speaker gender, total duration, segment count, and literary works.</div>
+        </div>
 
-<h3>Citation</h3>
+        <div class="figure-block">
+            <img src="img/brspeech_overview_pies.png" alt="BRSpeech-TTS Overview Pie Charts" width="950">
+            <div class="figure-caption">Figure 2: Proportion of audio duration per speaker (Top 6 + Others, left), total duration by speaker gender (center), and Portuguese accent distribution (Brazilian vs. European Portuguese, right).</div>
+        </div>
+
+        <h4>2. Acoustic, Lexical &amp; Alignment Metrics</h4>
+        <p>The table below summarizes the statistical distributions of segment duration, word count, character length, speaking rate, and ASR text-audio alignment similarity across the BRSpeech-CML-TTS corpus:</p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Metric</th>
+                    <th>Mean ± Std</th>
+                    <th>Median</th>
+                    <th>IQR (25% – 75%)</th>
+                    <th>Min – Max</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Base Segment Duration (s)</strong></td>
+                    <td>14.67 ± 2.98 s</td>
+                    <td>14.61 s</td>
+                    <td>12.13 – 17.27 s</td>
+                    <td>5.26 – 21.91 s</td>
+                </tr>
+                <tr>
+                    <td><strong>HF Sub-Segment Duration (s)</strong></td>
+                    <td>8.80 ± 4.46 s</td>
+                    <td>9.10 s</td>
+                    <td>4.64 – 12.80 s</td>
+                    <td>0.12 – 20.00 s</td>
+                </tr>
+                <tr>
+                    <td><strong>Words per Base Segment</strong></td>
+                    <td>33.31 ± 8.99 words</td>
+                    <td>33.0 words</td>
+                    <td>27.0 – 40.0 words</td>
+                    <td>1 – 72 words</td>
+                </tr>
+                <tr>
+                    <td><strong>Characters per Base Segment</strong></td>
+                    <td>193.89 ± 49.07 chars</td>
+                    <td>192.0 chars</td>
+                    <td>162.0 – 228.0 chars</td>
+                    <td>4 – 410 chars</td>
+                </tr>
+                <tr>
+                    <td><strong>Speaking Rate (Words / Min)</strong></td>
+                    <td>136.69 ± 24.59 WPM</td>
+                    <td>136.46 WPM</td>
+                    <td>120.2 – 152.8 WPM</td>
+                    <td>40.0 – 260.0 WPM</td>
+                </tr>
+                <tr>
+                    <td><strong>Levenshtein Alignment Similarity</strong></td>
+                    <td>0.9829 ± 0.021</td>
+                    <td>1.0000</td>
+                    <td>0.972 – 1.000</td>
+                    <td>88.94% ≥ 0.95 (60.5% exact 1.0)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="figure-block">
+            <img src="img/brspeech_distributions.png" alt="BRSpeech-TTS Statistical Distributions" width="950">
+            <div class="figure-caption">Figure 3: Multi-panel statistical distributions of (A) segment duration, (B) word count per utterance, (C) speaking rate in words per minute by gender, and (D) normalized Levenshtein similarity between original book text and ASR transcript.</div>
+        </div>
+
+        <h4>3. Top Speakers Analysis</h4>
+        <p>
+            The 6 most prolific narrators in the training set (<code>2961</code>, <code>12249</code>, <code>9351</code>, <code>10107</code>, <code>4367</code>, and <code>5677</code>) account for <strong>150.29 hours (94.0%)</strong> of the dataset, making BRSpeech-TTS suitable for both <strong>single-speaker high-resource TTS</strong> (e.g., Speaker 2961 with 83.20 hours) and <strong>multi-speaker / zero-shot voice cloning</strong> across all 62 speakers.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Speaker ID</th>
+                    <th>Gender</th>
+                    <th>Accent</th>
+                    <th>Split</th>
+                    <th>Duration (Hours)</th>
+                    <th>Dataset Share</th>
+                    <th>Segments</th>
+                    <th>Total Words</th>
+                    <th>Books Read</th>
+                    <th>Mean Duration</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>2961</strong></td>
+                    <td>Female (F)</td>
+                    <td>BR</td>
+                    <td>Train</td>
+                    <td><strong>83.20 h</strong></td>
+                    <td>52.04%</td>
+                    <td>20,359</td>
+                    <td>656,825</td>
+                    <td>38</td>
+                    <td>14.71 s</td>
+                </tr>
+                <tr>
+                    <td><strong>12249</strong></td>
+                    <td>Female (F)</td>
+                    <td>BR</td>
+                    <td>Train</td>
+                    <td><strong>17.23 h</strong></td>
+                    <td>10.78%</td>
+                    <td>4,087</td>
+                    <td>136,244</td>
+                    <td>6</td>
+                    <td>15.18 s</td>
+                </tr>
+                <tr>
+                    <td><strong>9351</strong></td>
+                    <td>Male (M)</td>
+                    <td>BR</td>
+                    <td>Train</td>
+                    <td><strong>16.61 h</strong></td>
+                    <td>10.39%</td>
+                    <td>4,172</td>
+                    <td>161,517</td>
+                    <td>5</td>
+                    <td>14.33 s</td>
+                </tr>
+                <tr>
+                    <td><strong>10107</strong></td>
+                    <td>Male (M)</td>
+                    <td>BR</td>
+                    <td>Train</td>
+                    <td><strong>13.64 h</strong></td>
+                    <td>8.53%</td>
+                    <td>3,370</td>
+                    <td>102,431</td>
+                    <td>4</td>
+                    <td>14.57 s</td>
+                </tr>
+                <tr>
+                    <td><strong>4367</strong></td>
+                    <td>Male (M)</td>
+                    <td>BR</td>
+                    <td>Train</td>
+                    <td><strong>11.51 h</strong></td>
+                    <td>7.20%</td>
+                    <td>2,938</td>
+                    <td>95,931</td>
+                    <td>16</td>
+                    <td>14.11 s</td>
+                </tr>
+                <tr>
+                    <td><strong>5677</strong></td>
+                    <td>Male (M)</td>
+                    <td>BR</td>
+                    <td>Train</td>
+                    <td><strong>8.11 h</strong></td>
+                    <td>5.07%</td>
+                    <td>2,034</td>
+                    <td>75,092</td>
+                    <td>4</td>
+                    <td>14.35 s</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Other 56 Speakers</td>
+                    <td>33 M / 23 F</td>
+                    <td>55 BR / 1 EU</td>
+                    <td>Train / Dev / Test</td>
+                    <td>9.57 h</td>
+                    <td>5.99%</td>
+                    <td>2,270</td>
+                    <td>78,873</td>
+                    <td>31</td>
+                    <td>15.18 s</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="figure-block">
+            <img src="img/brspeech_duration_per_speaker_colored_top6.png" alt="Segment Duration Distribution Top 6 Speakers" width="920">
+            <div class="figure-caption">Figure 4: Violin and box plots of audio segment duration (in seconds) for the Top 6 speakers in BRSpeech-TTS, colored by speaker gender.</div>
+        </div>
+
+        <div class="figure-block">
+            <img src="img/brspeech_words_per_speaker_colored_top6.png" alt="Words per Utterance Top 6 Speakers" width="920">
+            <div class="figure-caption">Figure 5: Violin and box plots of the number of words per utterance for the Top 6 speakers in BRSpeech-TTS, colored by speaker gender.</div>
+        </div>
+
+        <div class="figure-block">
+            <img src="img/brspeech_speakers_books_analysis.png" alt="Top 15 Speakers and Literary Works" width="960">
+            <div class="figure-caption">Figure 6: Left — Top 15 speakers by total audio duration (log scale). Right — Top 15 public-domain literary works from Project Gutenberg / LibriVox represented in BRSpeech-TTS.</div>
+        </div>
+
+        <h3 style="text-align:center;">Portuguese Audio Samples</h3>
+        <p style="text-align:center;"><b>Audio Samples from the Portuguese Subset &amp; YourTTS Synthesis</b></p>
+        <table style="margin:0 auto; display: table !important; width: auto;">
+            <thead>
+                <tr>
+                    <th>Speaker</th>
+                    <th>Ground Truth</th>
+                    <th>YourTTS</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td rowspan="3"><strong>4067</strong></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000002_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000002_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000033_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000033_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000088_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000088_yourtts.wav"></audio></td>
+            </tr>
+
+            <tr>
+                <td rowspan="3"><strong>6549</strong></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_4739_000013_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_4739_000013_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_13511_000039-0002_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_13511_000039-0002_yourtts.wav"></audio></td>
+            </tr>
+
+            <tr>
+                <td rowspan="3"><strong>11247</strong></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000033-0001_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000033-0001_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000048_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000048_yourtts.wav"></audio></td>
+            </tr>
+
+            <tr>
+                <td rowspan="3"><strong>12710</strong></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000047_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000047_yourtts.wav"></audio></td>
+            </tr>
+            <tr>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000052-0001_ground_truth.wav"></audio></td>
+                <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000052-0001_yourtts.wav"></audio></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h3>Citation</h3>
+        <p>If you use <strong>BRSpeech-TTS</strong> or <strong>CML-TTS</strong> in your research, please cite our paper:</p>
 <pre class="highlight">
 @InProceedings{Cmltts2023,
     title="CML-TTS: A Multilingual Dataset for Speech Synthesis in Low-Resource Languages",
@@ -149,22 +539,16 @@ The table below displays the total duration of each language subset present in t
 }
 </pre>
 
-
-<footer class="site-footer">
-    <a href="https://ceia.ufg.br/" title="CEIA" target="_blank"> <img src="img/ceia.png" border="0" height="100"> </a>    
-    <a href="http://www.deeplearningbrasil.com.br/" title="Deep Learning Brasil" target="_blank"> <img src="img/dlb.png" border="0" height="50"> </a>
-    <div class="cleaner"></div>
-</footer>
-<span class="site-footer-owner">
-    <center></center>
-</span>
-</section>
-
-
-
+        <footer class="site-footer">
+            <a href="https://ceia.ufg.br/" title="CEIA - UFG" target="_blank"><img src="img/ceia.png" border="0" height="100"></a>
+            <a href="http://www.deeplearningbrasil.com.br/" title="Deep Learning Brasil" target="_blank"><img src="img/dlb.png" border="0" height="50"></a>
+            <div class="cleaner"></div>
+        </footer>
+        <span class="site-footer-owner">
+            <center></center>
+        </span>
+    </section>
 
     <script src="js/animheader.js"></script>
-
 </body>
-
 </html>
