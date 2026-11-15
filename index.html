@@ -84,6 +84,51 @@
             background-color: #eaecef;
             font-weight: 700;
         }
+        .badge-br {
+            display: inline-block;
+            background-color: #e6f4f1;
+            color: #1d6f65;
+            border: 1px solid #2a9d8f;
+            border-radius: 4px;
+            padding: 0.1rem 0.45rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            font-family: monospace;
+        }
+        .badge-eu {
+            display: inline-block;
+            background-color: #fef6e4;
+            color: #8a6d1b;
+            border: 1px solid #d4a72c;
+            border-radius: 4px;
+            padding: 0.1rem 0.45rem;
+            font-size: 0.82rem;
+            font-weight: 700;
+            font-family: monospace;
+        }
+        details.speaker-details {
+            margin: 1.25rem 0 2rem 0;
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            background: #ffffff;
+        }
+        details.speaker-details summary {
+            padding: 0.85rem 1.15rem;
+            font-weight: 700;
+            color: #155799;
+            cursor: pointer;
+            background-color: #f6f8fa;
+            border-radius: 6px;
+            user-select: none;
+        }
+        details.speaker-details[open] summary {
+            border-bottom: 1px solid #d0d7de;
+            border-radius: 6px 6px 0 0;
+        }
+        .details-body {
+            padding: 0.75rem 1rem;
+            overflow-x: auto;
+        }
     </style>
 </head>
 
@@ -122,6 +167,7 @@
                 <li><strong>Adobe Speech Enhancement:</strong> All recordings from the CML-TTS Portuguese subset were processed through Adobe Enhancement to remove background noise, room reverberation, and microphone artifacts while preserving speaker timbre and prosody.</li>
                 <li><strong>Full-Bandwidth 48 kHz Audio:</strong> Upsampled and restored to <strong>48 kHz</strong> (16-bit PCM Mono FLAC/WAV), compared to 24 kHz in the original CML-TTS release.</li>
                 <li><strong>ASR-Verified Transcriptions:</strong> Segments were transcribed using <strong>OpenAI Whisper Large-v2</strong> and <strong>MMS</strong>, aligned against public-domain literary texts from <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a> and <a href="https://librivox.org/" target="_blank">LibriVox</a>, achieving a mean Levenshtein similarity score of <strong>0.983</strong> (median <strong>1.000</strong>).</li>
+                <li><strong>Verified Per-Speaker Accent Labels (<code>pt_br</code> vs. <code>pt_eu</code>):</strong> Every clip across all 62 speakers was evaluated with the <a href="https://huggingface.co/lgris/portuguese-accent-classifier" target="_blank"><code>lgris/portuguese-accent-classifier</code></a> model, identifying <strong>51 Brazilian Portuguese (<code>pt_br</code>) speakers</strong> (158.75 h / 99.30%) and <strong>11 European Portuguese (<code>pt_eu</code>) speakers</strong> (1.12 h / 0.70%).</li>
             </ul>
         </div>
 
@@ -133,6 +179,10 @@
             <div class="stat-card">
                 <span class="stat-value">62</span>
                 <span class="stat-label">Speakers (37 M / 25 F)</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-value">51 / 11</span>
+                <span class="stat-label">Accents (51 pt_br / 11 pt_eu)</span>
             </div>
             <div class="stat-card">
                 <span class="stat-value">39,230</span>
@@ -172,9 +222,10 @@ print(dataset)
 #     test: Dataset({features: [...], num_rows: 1316})
 # })</code></pre>
 
-        <p>You can also download the original CML-TTS Portuguese archives and segment metadata on <a href="http://www.openslr.org/146/" target="_blank">OpenSLR (SLR146)</a>:</p>
+        <p>You can also download the original CML-TTS Portuguese archives, segment metadata, and speaker accent classifications:</p>
         <ul>
-            <li><a href="https://huggingface.co/datasets/freds0/BRSpeech-TTS/" target="_blank"><strong>BRSpeech-TTS on Hugging Face Hub</strong></a> (Adobe Enhanced version — Parquet format with integrated audio, transcripts, Levenshtein scores, speaker gender &amp; accent metadata)</li>
+            <li><a href="https://huggingface.co/datasets/freds0/BRSpeech-TTS/" target="_blank"><strong>BRSpeech-TTS on Hugging Face Hub</strong></a> (Adobe Enhanced version — Parquet format with integrated audio, transcripts, Levenshtein scores, speaker gender &amp; verified <code>pt_br</code> / <code>pt_eu</code> accent metadata)</li>
+            <li><a href="resources/accent_por_locutor.csv" download><strong>Per-Speaker Accent Classification CSV (<code>accent_por_locutor.csv</code>)</strong></a> — Speaker-level predictions, clip counts, majority share, and confidence scores for all 62 narrators</li>
             <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_portuguese_v0.1.tar.bz">CML-TTS Dataset Portuguese (v0.1)</a> — MD5: <code>8c877a4be0eb41f275497609df5a114c</code></li>
             <li><a href="https://www.openslr.org/resources/146/cml_tts_dataset_segments_v0.1.tar.bz">CML-TTS Dataset Segments (v0.1)</a> — MD5: <code>f529a908aba26a6d891b4fb17ab3125b</code></li>
             <li>BRSpeech-CML-TTS Release Archive (<code>BRSpeech_CML_TTS_v14012024.tar.bz</code>) — MD5: <code>0966023cea9c0f339dae464d0fcfe7f8</code></li>
@@ -183,12 +234,12 @@ print(dataset)
         <h3>Dataset Statistics &amp; Analysis</h3>
 
         <p>
-            BRSpeech-TTS comprises recordings of <strong>55 public-domain literary works</strong> from <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a> read by <strong>62 volunteer narrators</strong> from the <a href="https://librivox.org/" target="_blank">LibriVox</a> project (61 Brazilian Portuguese speakers accounting for 99.8% of total duration, and 1 European Portuguese speaker in the validation split accounting for 0.2%).
+            BRSpeech-TTS comprises recordings of <strong>55 public-domain literary works</strong> from <a href="https://www.gutenberg.org/" target="_blank">Project Gutenberg</a> read by <strong>62 volunteer narrators</strong> from the <a href="https://librivox.org/" target="_blank">LibriVox</a> project: <strong>51 Brazilian Portuguese (<code>pt_br</code>) speakers</strong> accounting for <strong>158.75 hours (99.30%)</strong> of total duration, and <strong>11 European Portuguese (<code>pt_eu</code>) speakers</strong> accounting for <strong>1.12 hours (0.70%)</strong>.
             Across the <strong>39,230 base FLAC recordings</strong> (20.59 GB compressed FLAC; further segmented into <strong>76,322 utterances</strong> in the Hugging Face Hub release), the corpus totals <strong>159.87 hours</strong> of speech and <strong>1,306,913 words</strong> (7.61 million characters).
         </p>
 
-        <h4>1. Split &amp; Gender Breakdown</h4>
-        <p>The table below details the distribution of audio duration, speakers, base segments, Hugging Face sub-segments, and literary works across the <code>train</code>, <code>validation (dev)</code>, and <code>test</code> splits:</p>
+        <h4>1. Split, Gender &amp; Accent Breakdown</h4>
+        <p>The table below details the distribution of audio duration, speakers by gender and accent (<code>pt_br</code> vs. <code>pt_eu</code>), base segments, Hugging Face sub-segments, and literary works across the <code>train</code>, <code>validation (dev)</code>, and <code>test</code> splits:</p>
 
         <table class="data-table">
             <thead>
@@ -200,6 +251,7 @@ print(dataset)
                     <th>Male Speakers</th>
                     <th>Female Speakers</th>
                     <th>Total Speakers</th>
+                    <th>Accents (pt_br / pt_eu)</th>
                     <th>Base FLAC Segments</th>
                     <th>HF Hub Utterances</th>
                     <th>Books</th>
@@ -214,6 +266,7 @@ print(dataset)
                     <td>25</td>
                     <td>17</td>
                     <td><strong>42</strong></td>
+                    <td>33 <code>pt_br</code> / 9 <code>pt_eu</code></td>
                     <td>37,533</td>
                     <td>73,848</td>
                     <td>53</td>
@@ -226,6 +279,7 @@ print(dataset)
                     <td>7</td>
                     <td>3</td>
                     <td><strong>10</strong></td>
+                    <td>8 <code>pt_br</code> / 2 <code>pt_eu</code></td>
                     <td>826</td>
                     <td>1,158</td>
                     <td>10</td>
@@ -238,6 +292,7 @@ print(dataset)
                     <td>5</td>
                     <td>5</td>
                     <td><strong>10</strong></td>
+                    <td>10 <code>pt_br</code> / 0 <code>pt_eu</code></td>
                     <td>871</td>
                     <td>1,316</td>
                     <td>9</td>
@@ -250,6 +305,7 @@ print(dataset)
                     <td>37 (59.7%)</td>
                     <td>25 (40.3%)</td>
                     <td>62 (100%)</td>
+                    <td>51 pt_br / 11 pt_eu</td>
                     <td>39,230</td>
                     <td>76,322</td>
                     <td>55</td>
@@ -264,10 +320,166 @@ print(dataset)
 
         <div class="figure-block">
             <img src="img/brspeech_overview_pies.png" alt="BRSpeech-TTS Overview Pie Charts" width="950">
-            <div class="figure-caption">Figure 2: Proportion of audio duration per speaker (Top 6 + Others, left), total duration by speaker gender (center), and Portuguese accent distribution (Brazilian vs. European Portuguese, right).</div>
+            <div class="figure-caption">Figure 2: Proportion of audio duration per speaker (Top 6 + Others, left), total duration by speaker gender (center), and Portuguese accent distribution (<code>pt_br</code> vs. <code>pt_eu</code>, right).</div>
         </div>
 
-        <h4>2. Acoustic, Lexical &amp; Alignment Metrics</h4>
+        <h4>2. Portuguese Accent Classification (<code>pt_br</code> vs. <code>pt_eu</code>)</h4>
+        <p>
+            To provide accurate dialect labels for TTS training and accent-conditioned synthesis, all <strong>39,230 base FLAC files</strong> across the <strong>62 speakers</strong> were classified using <a href="https://huggingface.co/lgris/portuguese-accent-classifier" target="_blank"><code>lgris/portuguese-accent-classifier</code></a> (checkpoint <code>4f287aba669b7688570a213bdab125631a0a0920</code>) using sliding 5.0 s windows (2.5 s hop) at 16 kHz.
+            Each speaker's accent label (<code>pt_br</code> or <code>pt_eu</code>) is determined by majority vote across all of their utterances (with <strong>0 classification errors</strong> across all 39,230 clips). The full per-speaker table is available in <a href="resources/accent_por_locutor.csv" download><code>accent_por_locutor.csv</code></a> and integrated into the <code>accent</code> column of the Hugging Face Hub dataset.
+        </p>
+
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Accent Label</th>
+                    <th>Portuguese Variety</th>
+                    <th>Speakers (M / F)</th>
+                    <th>Splits (Train / Dev / Test)</th>
+                    <th>Duration (Hours)</th>
+                    <th>Duration Share</th>
+                    <th>Speaker Segments</th>
+                    <th>Clip Preds (pt_br / pt_eu)</th>
+                    <th>Mean Majority Share</th>
+                    <th>Mean Confidence</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="badge-br">pt_br</span></td>
+                    <td><strong>Brazilian Portuguese</strong></td>
+                    <td><strong>51</strong> (33 M / 18 F)</td>
+                    <td>33 / 8 / 10 spks<br><small>(152.14h / 2.88h / 3.73h)</small></td>
+                    <td><strong>158.75 h</strong></td>
+                    <td>99.30%</td>
+                    <td>38,971</td>
+                    <td>38,926 / 45</td>
+                    <td>99.64%</td>
+                    <td>0.9808</td>
+                </tr>
+                <tr>
+                    <td><span class="badge-eu">pt_eu</span></td>
+                    <td><strong>European Portuguese</strong></td>
+                    <td><strong>11</strong> (4 M / 7 F)</td>
+                    <td>9 / 2 / 0 spks<br><small>(0.37h / 0.75h / 0.00h)</small></td>
+                    <td><strong>1.12 h</strong></td>
+                    <td>0.70%</td>
+                    <td>259</td>
+                    <td>0 / 259</td>
+                    <td>100.00%</td>
+                    <td>0.9969</td>
+                </tr>
+                <tr class="total-row">
+                    <td>Total</td>
+                    <td>All Varieties</td>
+                    <td>62 (37 M / 25 F)</td>
+                    <td>42 / 10 / 10 spks</td>
+                    <td>159.87 h</td>
+                    <td>100.00%</td>
+                    <td>39,230</td>
+                    <td>38,926 / 304</td>
+                    <td>99.71%</td>
+                    <td>0.9837</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="figure-block">
+            <img src="img/brspeech_accent_analysis.png" alt="BRSpeech-TTS Portuguese Accent Classification" width="950">
+            <div class="figure-caption">Figure 3: Left — Speaker count and audio duration by split and Portuguese variety (<code>pt_br</code> vs. <code>pt_eu</code>). Right — Breakdown of all 11 European Portuguese (<code>pt_eu</code>) speakers by duration, clip count, and classifier confidence.</div>
+        </div>
+
+        <p>
+            All <strong>11 European Portuguese (<code>pt_eu</code>) speakers</strong> achieved <strong>100.0% clip-level agreement</strong> (all 259 clips classified as <code>pt_eu</code>, 0 as <code>pt_br</code>), while <strong>43 of the 51 Brazilian Portuguese (<code>pt_br</code>) speakers</strong> also achieved 100.0% agreement (and the remaining 8 <code>pt_br</code> speakers achieved 92.39%–99.94% majority share).
+        </p>
+
+        <details class="speaker-details">
+            <summary>▸ View Complete Per-Speaker Accent Classification Table (All 62 Speakers — accent_por_locutor.csv)</summary>
+            <div class="details-body">
+                <table class="data-table" style="margin: 0.5rem 0;">
+                    <thead>
+                        <tr>
+                            <th>Speaker ID</th>
+                            <th>Gender</th>
+                            <th>Split</th>
+                            <th>Accent</th>
+                            <th>Duration</th>
+                            <th>Total Samples</th>
+                            <th>pt_br Samples</th>
+                            <th>pt_eu Samples</th>
+                            <th>Majority Share</th>
+                            <th>Mean Confidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>533</strong></td><td>F</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.04 h</td><td>10</td><td>0</td><td>10</td><td>100.00%</td><td>0.999962</td></tr>
+                        <tr><td><strong>2959</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.11 h</td><td>28</td><td>28</td><td>0</td><td>100.00%</td><td>0.989884</td></tr>
+                        <tr><td><strong>2961</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>83.19 h</td><td>20,359</td><td>20,346</td><td>13</td><td>99.94%</td><td>0.997096</td></tr>
+                        <tr><td><strong>3037</strong></td><td>M</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.01 h</td><td>3</td><td>0</td><td>3</td><td>100.00%</td><td>0.999963</td></tr>
+                        <tr><td><strong>3050</strong></td><td>F</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.31 h</td><td>74</td><td>73</td><td>1</td><td>98.65%</td><td>0.909725</td></tr>
+                        <tr><td><strong>3369</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.01 h</td><td>4</td><td>4</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>3427</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.00 h</td><td>1</td><td>1</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>3718</strong></td><td>F</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.05 h</td><td>14</td><td>0</td><td>14</td><td>100.00%</td><td>0.999833</td></tr>
+                        <tr><td><strong>3814</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.01 h</td><td>3</td><td>3</td><td>0</td><td>100.00%</td><td>0.999955</td></tr>
+                        <tr><td><strong>3976</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.03 h</td><td>6</td><td>6</td><td>0</td><td>100.00%</td><td>0.900933</td></tr>
+                        <tr><td><strong>4000</strong></td><td>F</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.03 h</td><td>8</td><td>0</td><td>8</td><td>100.00%</td><td>0.999963</td></tr>
+                        <tr><td><strong>4067</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>100</td><td>100</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>4341</strong></td><td>M</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.04 h</td><td>11</td><td>0</td><td>11</td><td>100.00%</td><td>0.973961</td></tr>
+                        <tr><td><strong>4367</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>11.50 h</td><td>2,938</td><td>2,920</td><td>18</td><td>99.39%</td><td>0.980433</td></tr>
+                        <tr><td><strong>4405</strong></td><td>M</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>92</td><td>92</td><td>0</td><td>100.00%</td><td>0.996158</td></tr>
+                        <tr><td><strong>4778</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.02 h</td><td>5</td><td>5</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>4783</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.03 h</td><td>9</td><td>9</td><td>0</td><td>100.00%</td><td>0.967152</td></tr>
+                        <tr><td><strong>4801</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.01 h</td><td>2</td><td>2</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>5025</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.01 h</td><td>2</td><td>2</td><td>0</td><td>100.00%</td><td>0.999953</td></tr>
+                        <tr><td><strong>5068</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.02 h</td><td>4</td><td>4</td><td>0</td><td>100.00%</td><td>0.955339</td></tr>
+                        <tr><td><strong>5103</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.07 h</td><td>17</td><td>17</td><td>0</td><td>100.00%</td><td>0.966601</td></tr>
+                        <tr><td><strong>5417</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>91</td><td>91</td><td>0</td><td>100.00%</td><td>0.993757</td></tr>
+                        <tr><td><strong>5677</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>8.11 h</td><td>2,034</td><td>2,031</td><td>3</td><td>99.85%</td><td>0.999008</td></tr>
+                        <tr><td><strong>5705</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.10 h</td><td>25</td><td>25</td><td>0</td><td>100.00%</td><td>0.989961</td></tr>
+                        <tr><td><strong>5739</strong></td><td>M</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>92</td><td>85</td><td>7</td><td>92.39%</td><td>0.837860</td></tr>
+                        <tr><td><strong>5888</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.14 h</td><td>36</td><td>36</td><td>0</td><td>100.00%</td><td>0.971716</td></tr>
+                        <tr><td><strong>6187</strong></td><td>F</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.02 h</td><td>4</td><td>0</td><td>4</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>6207</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.11 h</td><td>27</td><td>27</td><td>0</td><td>100.00%</td><td>0.962295</td></tr>
+                        <tr><td><strong>6549</strong></td><td>F</td><td>dev</td><td><span class='badge-eu'>pt_eu</span></td><td>0.38 h</td><td>80</td><td>0</td><td>80</td><td>100.00%</td><td>0.993945</td></tr>
+                        <tr><td><strong>6566</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>94</td><td>94</td><td>0</td><td>100.00%</td><td>0.992791</td></tr>
+                        <tr><td><strong>6581</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.01 h</td><td>3</td><td>3</td><td>0</td><td>100.00%</td><td>0.905089</td></tr>
+                        <tr><td><strong>6601</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.06 h</td><td>17</td><td>16</td><td>1</td><td>94.12%</td><td>0.991015</td></tr>
+                        <tr><td><strong>6700</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.03 h</td><td>9</td><td>9</td><td>0</td><td>100.00%</td><td>0.963342</td></tr>
+                        <tr><td><strong>7028</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.17 h</td><td>43</td><td>43</td><td>0</td><td>100.00%</td><td>0.957247</td></tr>
+                        <tr><td><strong>7407</strong></td><td>M</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.03 h</td><td>6</td><td>0</td><td>6</td><td>100.00%</td><td>0.999961</td></tr>
+                        <tr><td><strong>7925</strong></td><td>F</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>92</td><td>92</td><td>0</td><td>100.00%</td><td>0.999955</td></tr>
+                        <tr><td><strong>8655</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.28 h</td><td>58</td><td>58</td><td>0</td><td>100.00%</td><td>0.990805</td></tr>
+                        <tr><td><strong>8680</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.08 h</td><td>20</td><td>20</td><td>0</td><td>100.00%</td><td>0.979348</td></tr>
+                        <tr><td><strong>9056</strong></td><td>F</td><td>dev</td><td><span class='badge-eu'>pt_eu</span></td><td>0.38 h</td><td>86</td><td>0</td><td>86</td><td>100.00%</td><td>0.999884</td></tr>
+                        <tr><td><strong>9217</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.19 h</td><td>50</td><td>50</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>9351</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>16.60 h</td><td>4,172</td><td>4,172</td><td>0</td><td>100.00%</td><td>0.999311</td></tr>
+                        <tr><td><strong>9485</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.11 h</td><td>28</td><td>28</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>9958</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.07 h</td><td>20</td><td>20</td><td>0</td><td>100.00%</td><td>0.989957</td></tr>
+                        <tr><td><strong>10107</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>13.63 h</td><td>3,370</td><td>3,370</td><td>0</td><td>100.00%</td><td>0.998553</td></tr>
+                        <tr><td><strong>10199</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.08 h</td><td>22</td><td>22</td><td>0</td><td>100.00%</td><td>0.992958</td></tr>
+                        <tr><td><strong>10250</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.12 h</td><td>29</td><td>29</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>10296</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.12 h</td><td>31</td><td>31</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>10670</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.00 h</td><td>1</td><td>1</td><td>0</td><td>100.00%</td><td>0.999956</td></tr>
+                        <tr><td><strong>11247</strong></td><td>F</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>78</td><td>78</td><td>0</td><td>100.00%</td><td>0.999956</td></tr>
+                        <tr><td><strong>11995</strong></td><td>F</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>78</td><td>78</td><td>0</td><td>100.00%</td><td>0.977448</td></tr>
+                        <tr><td><strong>12114</strong></td><td>F</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>91</td><td>91</td><td>0</td><td>100.00%</td><td>0.999957</td></tr>
+                        <tr><td><strong>12249</strong></td><td>F</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>17.23 h</td><td>4,087</td><td>4,087</td><td>0</td><td>100.00%</td><td>0.999502</td></tr>
+                        <tr><td><strong>12287</strong></td><td>M</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>91</td><td>90</td><td>1</td><td>98.90%</td><td>0.983076</td></tr>
+                        <tr><td><strong>12428</strong></td><td>M</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.10 h</td><td>26</td><td>0</td><td>26</td><td>100.00%</td><td>0.998674</td></tr>
+                        <tr><td><strong>12626</strong></td><td>M</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>85</td><td>85</td><td>0</td><td>100.00%</td><td>0.966972</td></tr>
+                        <tr><td><strong>12670</strong></td><td>F</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>89</td><td>89</td><td>0</td><td>100.00%</td><td>0.997902</td></tr>
+                        <tr><td><strong>12707</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>73</td><td>72</td><td>1</td><td>98.63%</td><td>0.961310</td></tr>
+                        <tr><td><strong>12710</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>92</td><td>92</td><td>0</td><td>100.00%</td><td>0.987517</td></tr>
+                        <tr><td><strong>12865</strong></td><td>M</td><td>train</td><td><span class='badge-br'>pt_br</span></td><td>0.15 h</td><td>38</td><td>38</td><td>0</td><td>100.00%</td><td>0.986876</td></tr>
+                        <tr><td><strong>13063</strong></td><td>M</td><td>test</td><td><span class='badge-br'>pt_br</span></td><td>0.38 h</td><td>87</td><td>87</td><td>0</td><td>100.00%</td><td>0.982489</td></tr>
+                        <tr><td><strong>13069</strong></td><td>M</td><td>dev</td><td><span class='badge-br'>pt_br</span></td><td>0.31 h</td><td>74</td><td>74</td><td>0</td><td>100.00%</td><td>0.999955</td></tr>
+                        <tr><td><strong>13196</strong></td><td>F</td><td>train</td><td><span class='badge-eu'>pt_eu</span></td><td>0.05 h</td><td>11</td><td>0</td><td>11</td><td>100.00%</td><td>0.999962</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </details>
+
+        <h4>3. Acoustic, Lexical &amp; Alignment Metrics</h4>
         <p>The table below summarizes the statistical distributions of segment duration, word count, character length, speaking rate, and ASR text-audio alignment similarity across the BRSpeech-CML-TTS corpus:</p>
 
         <table class="data-table">
@@ -328,10 +540,10 @@ print(dataset)
 
         <div class="figure-block">
             <img src="img/brspeech_distributions.png" alt="BRSpeech-TTS Statistical Distributions" width="950">
-            <div class="figure-caption">Figure 3: Multi-panel statistical distributions of (A) segment duration, (B) word count per utterance, (C) speaking rate in words per minute by gender, and (D) normalized Levenshtein similarity between original book text and ASR transcript.</div>
+            <div class="figure-caption">Figure 4: Multi-panel statistical distributions of (A) segment duration, (B) word count per utterance, (C) speaking rate in words per minute by gender, and (D) normalized Levenshtein similarity between original book text and ASR transcript.</div>
         </div>
 
-        <h4>3. Top Speakers Analysis</h4>
+        <h4>4. Top Speakers Analysis</h4>
         <p>
             The 6 most prolific narrators in the training set (<code>2961</code>, <code>12249</code>, <code>9351</code>, <code>10107</code>, <code>4367</code>, and <code>5677</code>) account for <strong>150.29 hours (94.0%)</strong> of the dataset, making BRSpeech-TTS suitable for both <strong>single-speaker high-resource TTS</strong> (e.g., Speaker 2961 with 83.20 hours) and <strong>multi-speaker / zero-shot voice cloning</strong> across all 62 speakers.
         </p>
@@ -355,7 +567,7 @@ print(dataset)
                 <tr>
                     <td><strong>2961</strong></td>
                     <td>Female (F)</td>
-                    <td>BR</td>
+                    <td><span class="badge-br">pt_br</span></td>
                     <td>Train</td>
                     <td><strong>83.20 h</strong></td>
                     <td>52.04%</td>
@@ -367,7 +579,7 @@ print(dataset)
                 <tr>
                     <td><strong>12249</strong></td>
                     <td>Female (F)</td>
-                    <td>BR</td>
+                    <td><span class="badge-br">pt_br</span></td>
                     <td>Train</td>
                     <td><strong>17.23 h</strong></td>
                     <td>10.78%</td>
@@ -379,7 +591,7 @@ print(dataset)
                 <tr>
                     <td><strong>9351</strong></td>
                     <td>Male (M)</td>
-                    <td>BR</td>
+                    <td><span class="badge-br">pt_br</span></td>
                     <td>Train</td>
                     <td><strong>16.61 h</strong></td>
                     <td>10.39%</td>
@@ -391,7 +603,7 @@ print(dataset)
                 <tr>
                     <td><strong>10107</strong></td>
                     <td>Male (M)</td>
-                    <td>BR</td>
+                    <td><span class="badge-br">pt_br</span></td>
                     <td>Train</td>
                     <td><strong>13.64 h</strong></td>
                     <td>8.53%</td>
@@ -403,7 +615,7 @@ print(dataset)
                 <tr>
                     <td><strong>4367</strong></td>
                     <td>Male (M)</td>
-                    <td>BR</td>
+                    <td><span class="badge-br">pt_br</span></td>
                     <td>Train</td>
                     <td><strong>11.51 h</strong></td>
                     <td>7.20%</td>
@@ -415,7 +627,7 @@ print(dataset)
                 <tr>
                     <td><strong>5677</strong></td>
                     <td>Male (M)</td>
-                    <td>BR</td>
+                    <td><span class="badge-br">pt_br</span></td>
                     <td>Train</td>
                     <td><strong>8.11 h</strong></td>
                     <td>5.07%</td>
@@ -427,7 +639,7 @@ print(dataset)
                 <tr class="total-row">
                     <td>Other 56 Speakers</td>
                     <td>33 M / 23 F</td>
-                    <td>55 BR / 1 EU</td>
+                    <td>45 pt_br / 11 pt_eu</td>
                     <td>Train / Dev / Test</td>
                     <td>9.57 h</td>
                     <td>5.99%</td>
@@ -441,17 +653,17 @@ print(dataset)
 
         <div class="figure-block">
             <img src="img/brspeech_duration_per_speaker_colored_top6.png" alt="Segment Duration Distribution Top 6 Speakers" width="920">
-            <div class="figure-caption">Figure 4: Violin and box plots of audio segment duration (in seconds) for the Top 6 speakers in BRSpeech-TTS, colored by speaker gender.</div>
+            <div class="figure-caption">Figure 5: Violin and box plots of audio segment duration (in seconds) for the Top 6 speakers in BRSpeech-TTS, colored by speaker gender.</div>
         </div>
 
         <div class="figure-block">
             <img src="img/brspeech_words_per_speaker_colored_top6.png" alt="Words per Utterance Top 6 Speakers" width="920">
-            <div class="figure-caption">Figure 5: Violin and box plots of the number of words per utterance for the Top 6 speakers in BRSpeech-TTS, colored by speaker gender.</div>
+            <div class="figure-caption">Figure 6: Violin and box plots of the number of words per utterance for the Top 6 speakers in BRSpeech-TTS, colored by speaker gender.</div>
         </div>
 
         <div class="figure-block">
             <img src="img/brspeech_speakers_books_analysis.png" alt="Top 15 Speakers and Literary Works" width="960">
-            <div class="figure-caption">Figure 6: Left — Top 15 speakers by total audio duration (log scale). Right — Top 15 public-domain literary works from Project Gutenberg / LibriVox represented in BRSpeech-TTS.</div>
+            <div class="figure-caption">Figure 7: Left — Top 15 speakers by total audio duration (log scale). Right — Top 15 public-domain literary works from Project Gutenberg / LibriVox represented in BRSpeech-TTS.</div>
         </div>
 
         <h3 style="text-align:center;">Portuguese Audio Samples</h3>
@@ -460,6 +672,7 @@ print(dataset)
             <thead>
                 <tr>
                     <th>Speaker</th>
+                    <th>Accent &amp; Gender</th>
                     <th>Ground Truth</th>
                     <th>YourTTS</th>
                 </tr>
@@ -467,6 +680,7 @@ print(dataset)
             <tbody>
             <tr>
                 <td rowspan="3"><strong>4067</strong></td>
+                <td rowspan="3" style="text-align:center;"><span class="badge-br">pt_br</span><br><small>Male (Dev)</small></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000002_ground_truth.wav"></audio></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/4067/4067_3313_000002_yourtts.wav"></audio></td>
             </tr>
@@ -481,6 +695,7 @@ print(dataset)
 
             <tr>
                 <td rowspan="3"><strong>6549</strong></td>
+                <td rowspan="3" style="text-align:center;"><span class="badge-eu">pt_eu</span><br><small>Female (Dev)</small></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_ground_truth.wav"></audio></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/6549/6549_4739_000010-0002_yourtts.wav"></audio></td>
             </tr>
@@ -495,6 +710,7 @@ print(dataset)
 
             <tr>
                 <td rowspan="3"><strong>11247</strong></td>
+                <td rowspan="3" style="text-align:center;"><span class="badge-br">pt_br</span><br><small>Female (Test)</small></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_ground_truth.wav"></audio></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/11247/11247_10229_000015-0001_yourtts.wav"></audio></td>
             </tr>
@@ -509,6 +725,7 @@ print(dataset)
 
             <tr>
                 <td rowspan="3"><strong>12710</strong></td>
+                <td rowspan="3" style="text-align:center;"><span class="badge-br">pt_br</span><br><small>Male (Dev)</small></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_ground_truth.wav"></audio></td>
                 <td><audio controls style="width: 240px;" src="audios_demo/portuguese/12710/12710_10229_000007-0001_yourtts.wav"></audio></td>
             </tr>
